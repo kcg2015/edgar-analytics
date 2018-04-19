@@ -75,15 +75,15 @@ The log.csv file can be very large. For example, log20170630.csv has a size abou
 
 ### Hash table to track active IP addresses and associated information
 
-I use a hash table (Python dictionary) ```dict_ip_sess```to keep track active IP addresses and the associated information. The hash table use IP addresses as keys. The value associated with each key is a tuple that contains the information such as session staring time, ending time, expiration time, and document name, etc. To maintain a small footprint of the table, the table is constantly update. The key-value pairs of expired sessions are deleted.
+I use a hash table (Python dictionary) ```dict_ip_sess```to keep track active IP addresses and the associated information. The hash table use IP addresses as keys. The value associated with each key is a tuple that contains the information such as session staring time, ending time, expiration time, and document name, etc. To maintain a small footprint of the table, the table is constantly updated, i.e., the key-value pairs of expired sessions are deleted.
 
 
 ### Priority queue to track inactive (expired) sessions
 
-I use Python dictionary implementation of a priority queue (adapted from: https://gist.github.com/matteodellamico/4451520). The keys of the dictionary are IP addresses, and values are a tuple of timestamps to be used as priorities. In particular, the class ```priority_dict(dict) ``` is used for updating and removing inactive (expired) sessions. The advantage over a standard heapq-based priority queue is that priorities of items can be efficiently updated (amortized O(1)). To maintain a small footprint of the priority queue, at each new time slot, the session with the top priority (expiration time) is checked. If the expiration time is less than or equal to the current time stamp, this session is deem inactive and thus removed from the priority queue. 
+I use Python dictionary implementation of a priority queue (adapted from: https://gist.github.com/matteodellamico/4451520). The keys of the dictionary are IP addresses, and values are a tuple of timestamps to be used as priorities. In particular, the class ```priority_dict(dict) ``` is used for updating and removing inactive (expired) sessions. The advantage over a standard heapq-based priority queue is that priorities of items can be efficiently updated (amortized O(1)). To maintain a small footprint of the priority queue, at each new time slot, the session with the top priority (expiration time) is checked. If the expiration time is less than or equal to the current time stamp, this session is deemed inactive and thus removed from the priority queue. 
 
 ### Stress tests
-I also run the following tests on the log files with very large number of records. The preliminary results show that run time increases linearly with the number of records.
+I also run the following tests on the log files with very large number of records. The preliminary results show that running time increases linearly with the number of records.
 
 | File name | No. of records| Max. no. of keys| Time (s) |
 | :--------:|:-------------:|     :-----:   | :-----:|
