@@ -39,7 +39,7 @@ def tuple_to_string(tup, key, t_base):
 
 def get_log_data(csv_fname):
     '''
-    A generator for the data in log.csv. Since csv files can ontain over 10 
+    A generator for the data in log.csv. Since csv files can contain over 10 
     millions of records, it is not necessary to store all the record in memory
     all at once.
 
